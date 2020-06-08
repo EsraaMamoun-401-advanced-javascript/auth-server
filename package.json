@@ -1,0 +1,37 @@
+{
+  "name": "auth-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "start-dev": "nodemon index.js",
+    "lint": "eslint '**/*.js'",
+    "test": "jest --verbose --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EsraaMamoun-401-advanced-javascript/auth-server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EsraaMamoun-401-advanced-javascript/auth-server/issues"
+  },
+  "homepage": "https://github.com/EsraaMamoun-401-advanced-javascript/auth-server#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "eslint": "^7.2.0",
+    "express": "^4.17.1",
+    "jest": "^26.0.1",
+    "mongoose": "^5.9.18",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "base-64": "^0.1.0",
+    "bcrypt": "^4.0.1",
+    "jsonwebtoken": "^8.5.1"
+  }
+}
