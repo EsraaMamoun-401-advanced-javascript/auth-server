@@ -4,9 +4,16 @@ require('dotenv').config();
 
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
 const SECRET = process.env.SECRET;
 
-const userSchema = require('./schema.js');
+const userSchema = mongoose.Schema({
+  username: { type: String, require: true, unique: true },
+  password: { type: String, require: true },
+  email: { type: String },
+  first_name: { type: String },
+  last_name: { type: String },
+});
 
 let complexity = 10;
 
@@ -21,7 +28,7 @@ userSchema.statics.authenticateBasic = function (auth) {
     .then(theUser => {
       theUser.compare(auth.password, this.password)
         .then(pass => pass ? this : null); // I'm not sure if should be undefined insted of null
-    }).catch(err => console.error(err));
+    }).catch(err => console.error('Error!!'));
 };
 
 userSchema.methods.generateToken = function(user) {
@@ -34,4 +41,4 @@ userSchema.statics.list = async function () {
   return userResults;
 };
 
-module.exports = userSchema;
+module.exports = mongoose.model('users', userSchema);
