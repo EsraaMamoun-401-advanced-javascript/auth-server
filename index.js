@@ -8,8 +8,6 @@ const server = require('./src/server.js');
 
 let PORT = process.env.PORT || 4000;
 
-server.start(PORT);
-
 const mongooseOption = {
   useUnifiedTopology: true,
   useNewUrlParser: true,
@@ -18,3 +16,5 @@ const mongooseOption = {
 };
 
 mongoose.connect(process.env.MONGODB_URI, mongooseOption);
+
+server.start(PORT);

@@ -10,9 +10,6 @@ const SECRET = process.env.SECRET;
 const userSchema = mongoose.Schema({
   username: { type: String, require: true, unique: true },
   password: { type: String, require: true },
-  email: { type: String },
-  first_name: { type: String },
-  last_name: { type: String },
 });
 
 let complexity = 10;
@@ -20,24 +17,30 @@ let complexity = 10;
 userSchema.pre('save', async function(){
   if (!userSchema.username) {
     this.password = await bcrypt.hash(this.password, complexity);
+    console.log('pass===>', this.password);
   }
 });
 
-userSchema.statics.authenticateBasic = function (auth) {
-  return this.findOne({username: auth.username})
-    .then(theUser => {
-      theUser.compare(auth.password, this.password)
-        .then(pass => pass ? this : null); // I'm not sure if should be undefined insted of null
-    }).catch(err => console.error('Error!!'));
+userSchema.statics.authenticateBasic = function(auth) {
+  return this.findOne({username:auth.username})
+    .then(user => user.theCompare(auth.password))
+    .catch(console.error);
+};
+
+userSchema.methods.theCompare = function(password) {
+  return bcrypt.compare(password, this.password)
+    .then(valid => valid ? this : null);
 };
 
 userSchema.methods.generateToken = function(user) {
   let token = jwt.sign({username: user.username}, SECRET);
+  console.log('token===>', token);
   return token;
 };
 
 userSchema.statics.list = async function () {
   let userResults = await this.find({});
+  console.log('userResults===>', userResults);
   return userResults;
 };
 

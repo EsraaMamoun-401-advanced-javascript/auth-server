@@ -8,40 +8,54 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(morgan('dev'));
+const notFound = require('./middleware/404.js');
+const errorServer = require('./middleware/500.js');
 
-const users_model = require('./auth/models/users-model.js');
-const basicAuth = require('./auth/middleware/oauth.js');
+const Users = require('./lib/users.js');
+const basicAuth = require('./lib/basic-auth-middleware.js');
+// const router = express.Router();
 
-
-app.post('/signup', (req, res) => {
+app.post('/signup', (req, res, next) => {
   // let {email, username, password, first_name, last_name} = req.body;
   let user = req.body;
+  let users = new Users(user);
 
-  users_model.save(user).then(result => {
-    let token = users_model.generateToken(result);
-    res.status(200).send(token);
+  // console.log({user});
+  // console.log(new Users());
 
-  }).catch(error => {
-    console.error(`Error!!`);
-    res.status(403).send('Invalid Signup! email is taken');
-  });
+  users.save()
+    .then(result => {
+      let token = users.generateToken(result);
+      res.status(200).json(token);
+    }).catch(error => {
+      console.error(`Error!!`);
+      res.status(403).send('invalid signup username is taken');
+      next();
+    });
 });
 
 app.post('/signin', basicAuth, (req, res) => {
   res.status(201).send(req.token);
 });
 
-app.get('/list', (req, res) => {
-  res.status(200).send(users_model.list());
+app.get('/users', (req, res) => {
+  // let user = req.body;
+  // let users = new Users();
+
+  Users.list()
+    .then(results=>{
+      res.status(200).json(results);
+    });
+  // res.status(200).json(Users.list());
 });
 
-const startServer = (port) => {
-  app.listen(port, () => {
-    console.log(`My server is up and running on ${port}`);
-  });
-};
+app.use('*', notFound);
+app.use(errorServer);
 
 module.exports = {
   server: app,
-  start: startServer,
+  start: port =>{
+    let PORT = port || process.env.PORT || 3000;
+    app.listen(PORT, () => console.log(`I'm listening to ${PORT}`));
+  },
 };
