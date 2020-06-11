@@ -3,7 +3,6 @@
 require('dotenv').config();
 
 const Users = require('./users.js');
-const users = new Users();
 
 const superagent = require('superagent');
 
@@ -58,13 +57,14 @@ async function getRemoteUserInfo(token) {
 }
 
 async function getUser(remoteUser) {
+  
   let userRecord = {
     username: remoteUser.login,
     password: 'oauthpassword',
   };
-
-  let savedUser = await users.save(userRecord);
-  let serverToken = users.generateToken(savedUser);
+  const users = new Users(userRecord);
+  let savedUser = await users.save();
+  let serverToken = users.generateToken(userRecord);
   
   return [savedUser, serverToken];
 }

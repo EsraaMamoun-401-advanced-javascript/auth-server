@@ -25,14 +25,12 @@ app.post('/signup', (req, res, next) => {
   // let {email, username, password, first_name, last_name} = req.body;
   let user = req.body;
   let users = new Users(user);
-
   // console.log({user});
   // console.log(new Users());
-
   users.save()
     .then(result => {
       let token = users.generateToken(result);
-      res.cookie('name', token ,{ expires: new Date(Date.now() + 12000000), httpOnly: true });
+      res.cookie('token', token ,{ expires: new Date(Date.now() + 12000000), httpOnly: false });
       res.status(200).json(token);
     }).catch(error => {
       console.error(`Error: invalid signup username is taken`);
@@ -42,7 +40,7 @@ app.post('/signup', (req, res, next) => {
 });
 
 app.post('/signin', basicAuth, (req, res) => {
-  res.cookie('name', req.token ,{ expires: new Date(Date.now() + 12000000), httpOnly: true });
+  res.cookie('token', req.token ,{ expires: new Date(Date.now() + 12000000), httpOnly: false });
   res.status(201).send(req.token);
 });
 
