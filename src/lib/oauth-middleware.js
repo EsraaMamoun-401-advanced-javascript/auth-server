@@ -41,7 +41,6 @@ async function exchangeCodeForToken(code) {
     code: code,
     grant_type: 'authorization_code',
   });
-  // access_token=e72e16c7e42f292c6912e7710c838347ae178b4a&token_type=bearer
   let access_token = tokenResponse.body.access_token;
   console.log('______STEP 2 ____access_token ------>>>> ', access_token);
   return access_token;
@@ -63,7 +62,9 @@ async function getUser(remoteUser) {
     username: remoteUser.login,
     password: 'oauthpassword',
   };
+
   let savedUser = await users.save(userRecord);
-  let serverToken = users.generateToken(userRecord);
+  let serverToken = users.generateToken(savedUser);
+  
   return [savedUser, serverToken];
 }
