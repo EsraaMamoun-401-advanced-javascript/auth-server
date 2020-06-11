@@ -51,7 +51,6 @@ app.get('/oauth', oath, (req, res)=> {
 app.get('/users', (req, res) => {
   // let user = req.body;
   // let users = new Users();
-
   Users.list()
     .then(results=>{
       res.status(200).json(results);
@@ -66,6 +65,6 @@ module.exports = {
   server: app,
   start: port =>{
     let PORT = port || process.env.PORT || 3000;
-    app.listen(PORT, () => console.log(`I'm listening to ${PORT}`));
+    app.listen(PORT, () => console.log(`My app is up and running on ${PORT}`));
   },
 };
