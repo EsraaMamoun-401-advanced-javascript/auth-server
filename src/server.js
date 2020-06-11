@@ -35,7 +35,6 @@ app.post('/signup', (req, res, next) => {
     }).catch(error => {
       console.error(`Error: invalid signup username is taken`);
       res.status(403).send('invalid signup username is taken');
-      // next();
     });
 });
 
