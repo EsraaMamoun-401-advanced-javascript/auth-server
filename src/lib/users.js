@@ -12,12 +12,13 @@ const userSchema = mongoose.Schema({
   password: { type: String, require: true },
 });
 
-// let complexity = 10;
+let complexity = 10;
 
 userSchema.pre('save', async function(){
   if (!userSchema.username) {
-    this.password = await bcrypt.hash(this.password, 10);
-    console.log('pass===>', this.password);
+    console.log('password before the hash===>', this.password);
+    this.password = await bcrypt.hash(this.password, complexity);
+    console.log('password after the hash===>', this.password);
   }
 });
 

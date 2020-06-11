@@ -35,9 +35,9 @@ app.post('/signup', (req, res, next) => {
       res.cookie('name', token ,{ expires: new Date(Date.now() + 12000000), httpOnly: true });
       res.status(200).json(token);
     }).catch(error => {
-      console.error(`Error!!`);
+      console.error(`Error: invalid signup username is taken`);
       res.status(403).send('invalid signup username is taken');
-      next();
+      // next();
     });
 });
 
