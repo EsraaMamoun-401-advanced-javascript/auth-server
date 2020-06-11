@@ -14,7 +14,11 @@ const errorServer = require('./middleware/500.js');
 const Users = require('./lib/users.js');
 const basicAuth = require('./lib/basic-auth-middleware.js');
 // const router = express.Router();
+const oath = require('./lib/oauth-middleware.js');
 
+// app.use('/public', express.static('public'));
+
+app.use(express.static('./public'));
 app.post('/signup', (req, res, next) => {
   // let {email, username, password, first_name, last_name} = req.body;
   let user = req.body;
@@ -36,6 +40,10 @@ app.post('/signup', (req, res, next) => {
 
 app.post('/signin', basicAuth, (req, res) => {
   res.status(201).send(req.token);
+});
+
+app.get('/oauth', oath, (req, res)=> {
+  res.status(200).send(req.token);
 });
 
 app.get('/users', (req, res) => {
