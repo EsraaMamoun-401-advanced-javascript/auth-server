@@ -26,6 +26,7 @@ app.post('/signup', (req, res, next) => {
   users.save()
     .then(result => {
       let token = users.generateToken(result);
+      res.cookie('name', token ,{ expires: new Date(Date.now() + 12000000), httpOnly: true });
       res.status(200).json(token);
     }).catch(error => {
       console.error(`Error!!`);
@@ -35,6 +36,7 @@ app.post('/signup', (req, res, next) => {
 });
 
 app.post('/signin', basicAuth, (req, res) => {
+  res.cookie('name', req.token ,{ expires: new Date(Date.now() + 12000000), httpOnly: true });
   res.status(201).send(req.token);
 });
 
