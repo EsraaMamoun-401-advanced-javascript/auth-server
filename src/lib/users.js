@@ -16,8 +16,9 @@ let complexity = 10;
 
 userSchema.pre('save', async function(){
   if (!userSchema.username) {
+    console.log('password before the hash===>', this.password);
     this.password = await bcrypt.hash(this.password, complexity);
-    console.log('pass===>', this.password);
+    console.log('password after the hash===>', this.password);
   }
 });
 
