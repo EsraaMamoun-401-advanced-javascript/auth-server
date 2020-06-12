@@ -17,6 +17,7 @@ const Users = require('./lib/users.js');
 const basicAuth = require('./lib/basic-auth-middleware.js');
 // const router = express.Router();
 const oauth = require('./lib/oauth-middleware.js');
+const bearerMiddleware = require('./lib/bearer-auth.js');
 
 // app.use('/public', express.static('public'));
 
@@ -57,12 +58,18 @@ app.get('/users', (req, res) => {
   // res.status(200).json(Users.list());
 });
 
+app.get('/secret', bearerMiddleware, (req, res) => {
+  console.log('req.users:::: ', req.users);
+  
+  res.status(200).json(req.users);
+});
+
 app.use('*', notFound);
 app.use(errorServer);
 
 module.exports = {
   server: app,
-  start: port =>{
+  start: port => {
     let PORT = process.env.PORT || 4000;
     app.listen(PORT, () => console.log(`My app is up and running on ${PORT}`));
   },

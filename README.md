@@ -8,6 +8,7 @@
 
 - [submission PR - class-11](https://github.com/EsraaMamoun-401-advanced-javascript/auth-server/pull/1)
 - [submission PR - class-12](https://github.com/EsraaMamoun-401-advanced-javascript/auth-server/pull/2)
+- [submission PR - class-13](https://github.com/EsraaMamoun-401-advanced-javascript/auth-server/pull/3)
 - [ci/cd](https://github.com/EsraaMamoun-401-advanced-javascript/auth-server/actions) (GitHub Actions)
 <!-- - [back-end server url](http://xyz.com) (when applicable) -->
 <!-- - [front-end application](http://xyz.com) (when applicable) -->
@@ -15,10 +16,11 @@
 ### Setup
 
 #### Routs
-- http://localhost:3000/signup
-- http://localhost:3000/signin
-- http://localhost:3000/users
+- http://localhost:3000/signup  ===> POST
+- http://localhost:3000/signin  ===> POST
+- http://localhost:3000/users   ===> GET
 - http://localhost:3000/        ====Redirect to====>  http://localhost:3000/aouth   
+- http://localhost:3000/secret  ===> GET
 
 #### `.env` 
 - PORT=3000
@@ -33,6 +35,7 @@
 ### Modules
 - basic-auth-middleware.js
 - oauth-middleware.js
+- bearer-auth.js
 - server.js
 - users.js
 - 404.js
@@ -41,17 +44,17 @@
 
 ### Packages
 - @code-fellows/supergoose
-- cors
-- dotenv
-- eslint
-- express
-- jest
-- mongoose
-- morgan
-- base-64
-- bcrypt
 - jsonwebtoken
 - superagent
+- mongoose
+- express
+- base-64
+- dotenv
+- eslint
+- morgan
+- bcrypt
+- cors
+- jest
 
 #### How to initialize/run your application (where applicable)
 
@@ -70,4 +73,4 @@
 - Describe any tests that you did not complete, skipped, etc -->
 
 #### UML
-![UML](./img/UML2.jpeg)
+![UML](./img/UML3.jpeg)

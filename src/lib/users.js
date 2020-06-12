@@ -45,4 +45,25 @@ userSchema.statics.list = async function () {
   return userResults;
 };
 
+userSchema.statics.verifyToken = function(token) {
+  return jwt.verify(token, SECRET, function(error, decoded) {
+    if (error) {
+      console.error('Error:::: ', 'Invalid Token, the token should be exist and without " "');
+      return Promise.reject(error);
+    }
+    console.log('decoded:::: ', decoded);
+    
+    let username = decoded['username'];
+    console.log({username});
+        
+    if(username) {   
+
+      console.log('##########################');
+         
+      return Promise.resolve(decoded);
+    }
+    return Promise.reject();
+  });
+};
+
 module.exports = mongoose.model('users', userSchema);
