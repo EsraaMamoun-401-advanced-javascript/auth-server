@@ -17,8 +17,8 @@ const Users = require('./lib/users.js');
 const basicAuth = require('./lib/basic-auth-middleware.js');
 // const router = express.Router();
 const oauth = require('./lib/oauth-middleware.js');
-const bearerMiddleware = require('./lib/bearer-auth.js');
-
+// const bearerMiddleware = require('./lib/bearer-auth.js');
+const extraRouter = require('./lib/extra-routes');
 // app.use('/public', express.static('public'));
 
 app.use(express.static('./public'));
@@ -58,12 +58,7 @@ app.get('/users', (req, res) => {
   // res.status(200).json(Users.list());
 });
 
-app.get('/secret', bearerMiddleware, (req, res) => {
-  console.log('req.users:::: ', req.users);
-  
-  res.status(200).json(req.users);
-});
-
+app.use(extraRouter);
 app.use('*', notFound);
 app.use(errorServer);
 
