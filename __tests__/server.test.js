@@ -13,6 +13,7 @@ describe('server.js', () => {
         expect(data.status).toEqual(200);
       });
   });
+
   it('ROUTE ===> signin ', async() => {
     let theUser = { 'username': 'esraaMamoun', 'password': 'esraaMamoun.1234' };
     mockRequest
@@ -25,6 +26,14 @@ describe('server.js', () => {
     return mockRequest
       .get('/users').then(data => {
         expect(data.status).toEqual(200);
+      });
+  });
+
+  it('ROUTE ===> secret ', async() => {
+    let theUser = { 'username': 'esraaMamoun', 'password': 'esraaMamoun.1234' };
+    return mockRequest
+      .get('/secret').send(theUser).then(data => {
+        expect(data.status).toEqual(500);
       });
   });
 
