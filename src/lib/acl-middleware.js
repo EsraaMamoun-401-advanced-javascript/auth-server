@@ -1,17 +1,14 @@
 'use strict';
 
-module.exports = (capability) => {
-  return (req, res, next) => {
-    try {
-      console.log('req.user.capabilites:::: ', req.user.capabilites);
-      if (req.user.capabilites.includes(capability)) {
-        console.log({capability});
-        next();
-      } else {
-        next('Access Denied');
-      }
-    } catch (error) {
-      next('Invalid Login');
-    }
+const Users = require('./users.js');
+
+module.exports= (capability)=>{
+  return (req,res,next) =>{
+    console.log('role:::: ',req.users.role);
+    console.log({capability});
+    return Users.can(req.users.role.includes(capability))
+      .then(result =>{
+        result ? next() : next('access Denide');
+      });
   };
 };
