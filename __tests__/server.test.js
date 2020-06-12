@@ -10,7 +10,7 @@ describe('server.js', () => {
     let theUser = { 'username': 'esraaMamoun', 'password': 'esraaMamoun.1234' };
     mockRequest
       .post('/signup').send(theUser).then(data => {
-        expect(data.status).toEqual(200);
+        expect(data.status).toEqual(403);
       });
   });
 
@@ -33,6 +33,39 @@ describe('server.js', () => {
     let theUser = { 'username': 'esraaMamoun', 'password': 'esraaMamoun.1234' };
     return mockRequest
       .get('/secret').send(theUser).then(data => {
+        expect(data.status).toEqual(500);
+      });
+  });
+
+  it('ROUTE ===> read ', async() => {
+    let theUser = { 'username': 'esraaMamoun', 'password': 'esraaMamoun.1234', 'role': 'user' };
+    return mockRequest
+      .get('/read').send(theUser).then(data => {
+        expect(data.status).toEqual(500);
+      });
+  });
+
+  it('ROUTE ===> add ', async() => {
+    let theUser = { 'username': 'esraaMamoun', 'password': 'esraaMamoun.1234', 'role': 'writer' };
+    return mockRequest
+      .post('/add').send(theUser).then(data => {
+        expect(data.status).toEqual(500);
+      });
+  });
+
+  it('ROUTE ===> change ', async() => {
+    let theUser = { 'username': 'esraaMamoun', 'password': 'esraaMamoun.1234', 'role': 'editor' };
+    return mockRequest
+      .put('/change').send(theUser).then(data => {
+        expect(data.status).toEqual(500);
+      });
+  });
+
+
+  it('ROUTE ===> remove ', async() => {
+    let theUser = { 'username': 'esraaMamoun', 'password': 'esraaMamoun.1234', 'role': 'admin' };
+    return mockRequest
+      .delete('/remove').send(theUser).then(data => {
         expect(data.status).toEqual(500);
       });
   });

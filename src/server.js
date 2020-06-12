@@ -17,9 +17,7 @@ const Users = require('./lib/users.js');
 const basicAuth = require('./lib/basic-auth-middleware.js');
 // const router = express.Router();
 const oauth = require('./lib/oauth-middleware.js');
-// const bearerMiddleware = require('./lib/bearer-auth.js');
-const extraRouter = require('./lib/extra-routes');
-// app.use('/public', express.static('public'));
+const extraRouter = require('./lib/extra-routes.js');
 
 app.use(express.static('./public'));
 app.post('/signup', (req, res, next) => {
@@ -31,7 +29,7 @@ app.post('/signup', (req, res, next) => {
   users.save()
     .then(result => {
       let token = users.generateToken(result);
-      res.cookie('token', token ,{ expires: new Date(Date.now() + 12000000), httpOnly: false });
+      res.cookie('token', token, { expires: new Date(Date.now() + 12000000), httpOnly: false });
       res.status(200).json(token);
     }).catch(error => {
       console.error(`Error: invalid signup username is taken`);
@@ -40,11 +38,11 @@ app.post('/signup', (req, res, next) => {
 });
 
 app.post('/signin', basicAuth, (req, res) => {
-  res.cookie('token', req.token ,{ expires: new Date(Date.now() + 12000000), httpOnly: false });
+  res.cookie('token', req.token, { expires: new Date(Date.now() + 12000000), httpOnly: false });
   res.status(201).send(req.token);
 });
 
-app.get('/oauth', oauth, (req, res, next)=> {
+app.get('/oauth', oauth, (req, res, next) => {
   res.status(200).send(req.token);
 });
 
@@ -52,7 +50,7 @@ app.get('/users', (req, res) => {
   // let user = req.body;
   // let users = new Users();
   Users.list()
-    .then(results=>{
+    .then(results => {
       res.status(200).json(results);
     });
   // res.status(200).json(Users.list());

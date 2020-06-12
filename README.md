@@ -9,6 +9,7 @@
 - [submission PR - class-11](https://github.com/EsraaMamoun-401-advanced-javascript/auth-server/pull/1)
 - [submission PR - class-12](https://github.com/EsraaMamoun-401-advanced-javascript/auth-server/pull/2)
 - [submission PR - class-13](https://github.com/EsraaMamoun-401-advanced-javascript/auth-server/pull/3)
+- [submission PR - class-14](https://github.com/EsraaMamoun-401-advanced-javascript/auth-server/pull/6)
 - [ci/cd](https://github.com/EsraaMamoun-401-advanced-javascript/auth-server/actions) (GitHub Actions)
 <!-- - [back-end server url](http://xyz.com) (when applicable) -->
 <!-- - [front-end application](http://xyz.com) (when applicable) -->
@@ -21,6 +22,10 @@
 - http://localhost:3000/users   ===> GET
 - http://localhost:3000/        ====Redirect to====>  http://localhost:3000/aouth   
 - http://localhost:3000/secret  ===> GET
+- http://localhost:3000/read    ===> GET
+- http://localhost:3000/add     ===> POST
+- http://localhost:3000/change  ===> PUT
+- http://localhost:3000/remove  ===> DELETE
 
 #### `.env` 
 - PORT=3000
@@ -35,6 +40,8 @@
 ### Modules
 - basic-auth-middleware.js
 - oauth-middleware.js
+- acl-middleware.js
+- extra-routes.js
 - bearer-auth.js
 - server.js
 - users.js
@@ -73,4 +80,4 @@
 - Describe any tests that you did not complete, skipped, etc -->
 
 #### UML
-![UML](./img/UML3.jpeg)
+![UML](./img/UML4.jpeg)

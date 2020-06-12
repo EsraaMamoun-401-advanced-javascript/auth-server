@@ -10,6 +10,7 @@ const SECRET = process.env.SECRET;
 const userSchema = mongoose.Schema({
   username: { type: String, require: true, unique: true },
   password: { type: String, require: true },
+  role: {type: String, required: true},
 });
 
 let complexity = 10;
@@ -34,7 +35,17 @@ userSchema.methods.theCompare = function(password) {
 };
 
 userSchema.methods.generateToken = function(user) {
-  let token = jwt.sign({username: user.username}, SECRET);
+  let roles = {
+    user: ['read'],
+    writer: ['read', 'update'],
+    editor: ['read', 'update', 'create'],
+    admin: ['read', 'update', 'create', 'delete'],
+  };
+  
+  let token = jwt.sign({
+    username: user.username, 
+    role: roles[user.role],
+  }, SECRET);
   console.log('token===>', token);
   return token;
 };
@@ -58,12 +69,26 @@ userSchema.statics.verifyToken = function(token) {
         
     if(username) {   
 
-      console.log('##########################');
+      // console.log('##########################');
          
       return Promise.resolve(decoded);
     }
     return Promise.reject();
   });
+};
+
+
+userSchema.statics.can = function (permision){
+
+  console.log({permision});
+
+  if(permision){
+    console.log(permision);
+    return Promise.resolve(true);
+  }
+  else{
+    return Promise.resolve(false);
+  }
 };
 
 module.exports = mongoose.model('users', userSchema);
