@@ -16,9 +16,9 @@ let complexity = 10;
 
 userSchema.pre('save', async function(){
   if (!userSchema.username) {
-    console.log('password before the hash===>', this.password);
+    // console.log('password before the hash===>', this.password);
     this.password = await bcrypt.hash(this.password, complexity);
-    console.log('password after the hash===>', this.password);
+    // console.log('password after the hash===>', this.password);
   }
 });
 
@@ -41,7 +41,7 @@ userSchema.methods.generateToken = function(user) {
 
 userSchema.statics.list = async function () {
   let userResults = await this.find({});
-  console.log('userResults===>', userResults);
+  // console.log('userResults===>', userResults);
   return userResults;
 };
 
